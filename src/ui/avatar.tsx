@@ -31,6 +31,22 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   )
 )
 
+const AvatarFallback = React.forwardRef<HTMLDivElement, AvatarProps>(
+  ({ className, src, alt, ...props }, ref) => (
+    <div ref={ref} className={cn("relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full", className)} {...props}>
+      {alt?.charAt(0)?.toUpperCase()}
+    </div>
+  )
+)
+
+const AvatarImage = React.forwardRef<HTMLImageElement, AvatarProps>(
+  ({ className, src, alt, ...props }, ref) => (
+    <img ref={ref} src={src} alt={alt} className={cn("aspect-square h-full w-full object-cover", className)} {...props} />
+  )
+)
+
+AvatarFallback.displayName = "AvatarFallback"
+
 Avatar.displayName = "Avatar"
 
-export { Avatar }
+export { Avatar, AvatarFallback, AvatarImage }

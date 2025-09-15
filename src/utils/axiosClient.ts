@@ -3,29 +3,33 @@ import axios from "axios";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const axiosClient = axios.create({
   baseURL: `${apiUrl}/api/v1`,
+  withCredentials: true, // Để gửi cookies tự động
 });
 
 axiosClient.interceptors.request.use(
-  (config) => {
-    const authToken = localStorage.getItem("auth_token");
-    if (authToken) {
-      config.headers.Authorization = `Bearer ${authToken}`;
-    }
+  (config: any) => {
+    // Không cần set Authorization header vì API sử dụng cookies
+    // Cookies sẽ được gửi tự động với withCredentials: true
     return config;
   },
-  (error) => {
+  (error: any) => {
     return Promise.reject(error);
   }
 );
 axiosClient.interceptors.response.use(
-  (response) => {
+  (response: any) => {
     return response;
   },
-  (error) => {
+  (error: any) => {
     if (error.response && error.response.status === 401) {
-      // console.error("Lỗi 401: Unauthorized");
-      // localStorage.removeItem("auth_token");
-      // window.location.href = "/login";
+      // Xóa dữ liệu user khỏi localStorage khi unauthorized
+      localStorage.removeItem("user_data");
+      localStorage.removeItem("auth_token");
+      
+      // Chỉ redirect nếu không phải trang login
+      if (typeof window !== 'undefined' && !window.location.pathname.includes('/tglogin')) {
+        window.location.href = "/";
+      }
     } else if (error.code === "ERR_NETWORK") {
       console.log("Server is not responding. Please try again later.");
     }

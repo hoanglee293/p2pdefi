@@ -1,3 +1,12 @@
 {
-  
+  "errors": {
+    "notFound": "페이지를 찾을 수 없습니다",
+    "goHome": "홈으로 돌아가기"
+  },
+  "languages": {
+    "korea": "한국어",
+    "english": "영어",
+    "vietnamese": "베트남어", 
+    "japan": "일본어"
+  }
 }

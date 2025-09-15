@@ -1,3 +1,12 @@
 {
-  
+  "errors": {
+    "notFound": "Page not found",
+    "goHome": "Go back home"
+  },
+  "languages": {
+    "korea": "Korea",
+    "english": "English", 
+    "vietnamese": "Vietnamese",
+    "japan": "Japan"
+  }
 }

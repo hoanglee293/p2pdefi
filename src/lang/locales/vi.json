@@ -1,3 +1,12 @@
 {
-  
+  "errors": {
+    "notFound": "Không tìm thấy trang",
+    "goHome": "Về trang chủ"
+  },
+  "languages": {
+    "korea": "Hàn Quốc",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt",
+    "japan": "Nhật Bản"
+  }
 }
