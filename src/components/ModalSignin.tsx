@@ -1,6 +1,7 @@
 "use client"
 import { useLang } from "@/lang";
 import React from "react";
+import Image from "next/image";
 
 interface ModalSigninProps {
   isOpen: boolean;
@@ -15,30 +16,6 @@ const { t } = useLang();
     console.log("handleGoogleSignIn")
   }
 
-  const handlePhantomConnect = async () => {
-    try {
-      // Check if Phantom is installed
-      const { solana } = window as any;
-      if (!solana?.isPhantom) {
-        window.open('https://phantom.app/', '_blank');
-        return;
-      }
-
-      // Connect to Phantom
-      const resp = await solana.connect();
-      const publicKey = resp.publicKey.toString();
-      
-      // Store connection info in localStorage
-      localStorage.setItem('phantomConnected', 'true');
-      localStorage.setItem('phantomPublicKey', publicKey);
-      
-      // Close modal and reload page to update header
-      onClose();
-      window.location.reload();
-    } catch (error) {
-      console.error('Error connecting to Phantom:', error);
-    }
-  }
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -74,9 +51,11 @@ const { t } = useLang();
               <div className="self-stretch h-12 relative">
                 <div className="w-12 h-12 left-0 top-0 absolute rounded-full bg-gray-100 dark:bg-gray-800"  />
                 <div className="w-7 h-7 left-[10px] top-[10px] absolute overflow-hidden cursor-pointer" onClick={handleGoogleSignIn}>
-                  <img
+                  <Image
                     src="https://img.icons8.com/color/48/google-logo.png"
                     alt="google"
+                    width={28}
+                    height={28}
                   />
                 </div>
               </div>
@@ -88,9 +67,11 @@ const { t } = useLang();
               <div className="self-stretch h-12 relative">
                 <div className="w-12 h-12 left-0 top-0 absolute rounded-full bg-gray-100 dark:bg-gray-800" />
                 <div className="w-7 h-7 left-[10px] top-[10px] absolute overflow-hidden cursor-pointer" onClick={() => window.open(`${process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL}=${sessionStorage.getItem('ref')}`, "_blank")}>
-                  <img
+                  <Image
                     src="https://img.icons8.com/color/48/telegram-app.png"
                     alt="telegram"
+                    width={28}
+                    height={28}
                   />
                 </div>
               </div>
