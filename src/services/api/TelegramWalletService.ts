@@ -6,12 +6,14 @@ export interface TelegramLoginParams {
 }
 
 export interface User {
-  uid: number;
+  uid?: number;
   uname: string;
   uemail: string | null;
   ufulllname: string;
   uavatar: string | null;
-  ustatus: string;
+  ustatus?: string;
+  ubirthday?: string;
+  usex?: string;
 }
 
 export interface TelegramLoginResponse {
@@ -46,6 +48,30 @@ export const TelegramWalletService = {
         telegram_id: params.telegram_id,
         code: params.code
       });
+    return response.data;
+  },
+
+  // Get user profile
+  getProfile: async (): Promise<{
+    success: boolean;
+    message: string;
+    data?: {
+      user: User;
+      mainWallet: {
+        umw_id: number;
+        address: string;
+        created_at: string;
+      };
+      importWallets: Array<{
+        uic_id: number;
+        uic_name: string;
+        address: string;
+        created_at: string;
+      }>;
+    };
+    timestamp: string;
+  }> => {
+    const response = await axiosClient.get('/auth/me');
     return response.data;
   },
 

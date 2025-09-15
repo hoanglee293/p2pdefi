@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { TelegramWalletService, User, TelegramLoginParams } from '@/services/api/TelegramWalletService';
+import { GoogleService, GoogleLoginParams } from '@/services/api/GoogleService';
 
 interface AuthState {
   user: User | null;
@@ -47,7 +48,7 @@ export const useAuth = () => {
   }, []);
 
   // Login với Telegram
-  const login = useCallback(async (params: TelegramLoginParams) => {
+  const loginWithTelegram = useCallback(async (params: TelegramLoginParams) => {
     setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
     
     try {
@@ -95,6 +96,60 @@ export const useAuth = () => {
     }
   }, []);
 
+  // Login với Google
+  const loginWithGoogle = useCallback(async (params: GoogleLoginParams) => {
+    setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const response = await GoogleService.loginWithGoogle(params);
+      
+      if (response.success && response.data) {
+        const user: User = {
+          uname: response.data.user.uname,
+          uemail: response.data.user.uemail,
+          ufulllname: response.data.user.ufulllname,
+          uavatar: response.data.user.uavatar,
+          ubirthday: response.data.user.ubirthday,
+          usex: response.data.user.usex,
+          ustatus: 'active'
+        };
+        
+        // Lưu user data vào localStorage
+        localStorage.setItem('user_data', JSON.stringify(user));
+        localStorage.setItem('auth_token', 'google_token'); // API sẽ set cookie
+        
+        setAuthState({
+          user,
+          isAuthenticated: true,
+          isLoading: false,
+          error: null
+        });
+        
+        return { 
+          success: true, 
+          isNewUser: response.data.isNewUser,
+          user 
+        };
+      } else {
+        throw new Error(response.message || 'Google login failed');
+      }
+    } catch (error: unknown) {
+      const errorMessage = (error as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message || 
+                          (error as { message?: string })?.message || 'Google login failed';
+      setAuthState(prev => ({
+        ...prev,
+        isLoading: false,
+        error: errorMessage
+      }));
+      return { success: false, error: errorMessage };
+    }
+  }, []);
+
+  // Generic login method (backward compatibility)
+  const login = useCallback(async (params: TelegramLoginParams) => {
+    return loginWithTelegram(params);
+  }, [loginWithTelegram]);
+
   // Logout
   const logout = useCallback(async () => {
     setAuthState(prev => ({ ...prev, isLoading: true }));
@@ -117,6 +172,46 @@ export const useAuth = () => {
     }
   }, []);
 
+  // Get user profile from API
+  const getProfile = useCallback(async () => {
+    try {
+      const response = await GoogleService.getProfile();
+      if (response.success && response.data) {
+        const user: User = {
+          uname: response.data.user.uname,
+          uemail: response.data.user.uemail,
+          ufulllname: response.data.user.ufulllname,
+          uavatar: response.data.user.uavatar,
+          ubirthday: response.data.user.ubirthday,
+          usex: response.data.user.usex,
+          ustatus: 'active'
+        };
+        
+        // Update user data in localStorage
+        localStorage.setItem('user_data', JSON.stringify(user));
+        
+        setAuthState(prev => ({
+          ...prev,
+          user,
+          isAuthenticated: true,
+          error: null
+        }));
+        
+        return { success: true, user };
+      } else {
+        throw new Error(response.message || 'Failed to get profile');
+      }
+    } catch (error: unknown) {
+      const errorMessage = (error as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message || 
+                          (error as { message?: string })?.message || 'Failed to get profile';
+      setAuthState(prev => ({
+        ...prev,
+        error: errorMessage
+      }));
+      return { success: false, error: errorMessage };
+    }
+  }, []);
+
   // Refetch user data
   const refetch = useCallback(() => {
     checkAuthStatus();
@@ -135,6 +230,9 @@ export const useAuth = () => {
   return {
     ...authState,
     login,
+    loginWithTelegram,
+    loginWithGoogle,
+    getProfile,
     logout,
     refetch,
     clearError

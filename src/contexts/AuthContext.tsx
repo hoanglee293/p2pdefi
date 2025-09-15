@@ -10,6 +10,9 @@ interface AuthContextType {
   isLoading: boolean;
   error: string | null;
   login: (params: { telegram_id: string; code: string }) => Promise<{ success: boolean; isNewUser?: boolean; error?: string }>;
+  loginWithTelegram: (params: { telegram_id: string; code: string }) => Promise<{ success: boolean; isNewUser?: boolean; error?: string }>;
+  loginWithGoogle: (params: { code: string }) => Promise<{ success: boolean; isNewUser?: boolean; error?: string }>;
+  getProfile: () => Promise<{ success: boolean; user?: User; error?: string }>;
   logout: () => Promise<void>;
   refetch: () => void;
   clearError: () => void;
