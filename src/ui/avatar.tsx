@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface AvatarProps extends React.HTMLProps<HTMLDivElement> {
@@ -16,9 +17,11 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
       {...props}
     >
       {src ? (
-        <img
+        <Image
           src={src}
-          alt={alt}
+          alt={alt || ""}
+          width={40}
+          height={40}
           className="aspect-square h-full w-full object-cover"
         />
       ) : (
@@ -32,7 +35,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
 )
 
 const AvatarFallback = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ className, src, alt, ...props }, ref) => (
+  ({ className, alt, ...props }, ref) => (
     <div ref={ref} className={cn("relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full", className)} {...props}>
       {alt?.charAt(0)?.toUpperCase()}
     </div>
@@ -40,10 +43,17 @@ const AvatarFallback = React.forwardRef<HTMLDivElement, AvatarProps>(
 )
 
 const AvatarImage = React.forwardRef<HTMLImageElement, AvatarProps>(
-  ({ className, src, alt, ...props }, ref) => (
-    <img ref={ref} src={src} alt={alt} className={cn("aspect-square h-full w-full object-cover", className)} {...props} />
+  ({ className, src, alt }) => (
+    <Image 
+      src={src || ""} 
+      alt={alt || ""} 
+      width={40} 
+      height={40} 
+      className={cn("aspect-square h-full w-full object-cover", className)} 
+    />
   )
 )
+AvatarImage.displayName = "AvatarImage"
 
 AvatarFallback.displayName = "AvatarFallback"
 

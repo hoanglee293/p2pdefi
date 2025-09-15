@@ -7,20 +7,20 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(
-  (config: any) => {
+  (config) => {
     // Không cần set Authorization header vì API sử dụng cookies
     // Cookies sẽ được gửi tự động với withCredentials: true
     return config;
   },
-  (error: any) => {
+  (error) => {
     return Promise.reject(error);
   }
 );
 axiosClient.interceptors.response.use(
-  (response: any) => {
+  (response) => {
     return response;
   },
-  (error: any) => {
+  (error) => {
     if (error.response && error.response.status === 401) {
       // Xóa dữ liệu user khỏi localStorage khi unauthorized
       localStorage.removeItem("user_data");

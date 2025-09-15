@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Dialog, DialogContent } from "@/ui/dialog";
 import { Button } from "@/ui/button";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -89,9 +90,6 @@ export default function WelcomeModal() {
     }
   };
 
-  const goToImage = (index: number) => {
-    setCurrentImageIndex(index);
-  };
 
   const isLastImage = currentImageIndex === images.length - 1;
 
@@ -137,9 +135,11 @@ export default function WelcomeModal() {
 
           {/* Hình ảnh */}
           <div className="relative overflow-hidden rounded-lg">
-            <img
+            <Image
               src={images[currentImageIndex]}
               alt={`Welcome ${currentImageIndex + 1}`}
+              width={500}
+              height={300}
               className="w-full h-auto object-contain transition-opacity duration-300"
             />
           </div>

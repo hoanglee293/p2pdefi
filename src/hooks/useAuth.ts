@@ -37,7 +37,7 @@ export const useAuth = () => {
           isLoading: false
         }));
       }
-    } catch (error) {
+    } catch {
       setAuthState(prev => ({
         ...prev,
         error: 'Failed to check authentication status',
@@ -83,8 +83,9 @@ export const useAuth = () => {
       } else {
         throw new Error(response.message || 'Login failed');
       }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || 'Login failed';
+    } catch (error: unknown) {
+      const errorMessage = (error as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message || 
+                          (error as { message?: string })?.message || 'Login failed';
       setAuthState(prev => ({
         ...prev,
         isLoading: false,

@@ -1,16 +1,17 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/ui/card';
 import { Alert, AlertDescription } from '@/ui/alert';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
-const TelegramLoginPage = () => {
+
+const TelegramLoginContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { login, isLoading, error, isAuthenticated, user } = useAuth();
+  const { login, isLoading, error, user } = useAuth();
   
   const [loginStatus, setLoginStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isNewUser, setIsNewUser] = useState(false);
@@ -30,7 +31,7 @@ const TelegramLoginPage = () => {
       } else {
         setLoginStatus('error');
       }
-    } catch (err) {
+    } catch {
       setLoginStatus('error');
     }
   }, [login, router]);
@@ -138,6 +139,18 @@ const TelegramLoginPage = () => {
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+const TelegramLoginPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
+      </div>
+    }>
+      <TelegramLoginContent />
+    </Suspense>
   );
 };
 

@@ -67,14 +67,17 @@ export const detectBrowserLanguage = (): LangCodes => {
 
 // Hàm hỗ trợ lấy dữ liệu từ object lồng nhau
 const getNestedTranslation = (translations: Translations, key: string): string | string[] => {
-  const result = key.split('.').reduce((obj: any, k) => {
+  const result = key.split('.').reduce((obj: Translations | undefined, k) => {
     if (typeof obj === 'object' && obj !== null && k in obj) {
       return obj[k] as Translations;
     }
     return undefined;
   }, translations as Translations);
   
-  return result || key;
+  if (typeof result === 'string' || Array.isArray(result)) {
+    return result;
+  }
+  return key;
 };
 
 // Export the translation function that takes language as a parameter

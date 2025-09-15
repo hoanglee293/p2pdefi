@@ -1,6 +1,6 @@
 'use client';
 import { useContext, useEffect, useState } from 'react';
-import { LangContext, LangContextProps } from './LangProvider';
+import { LangContext } from './LangProvider';
 import { LangCodes, detectBrowserLanguage } from './index';
 
 type TranslationValue = string | string[] | { [key: string]: TranslationValue };
@@ -11,18 +11,22 @@ export const useLang = () => {
     throw new Error('useLang must be used within a LangProvider');
   }
 
-  const getNestedValue = (obj: any, path: string[]): TranslationValue => {
+  const getNestedValue = (obj: TranslationValue, path: string[]): TranslationValue => {
     let current = obj;
     for (const key of path) {
       if (current === undefined || current === null) {
         return path.join(".");
       }
-      current = current[key];
+      if (typeof current === 'object' && current !== null && !Array.isArray(current)) {
+        current = (current as { [key: string]: TranslationValue })[key];
+      } else {
+        return path.join(".");
+      }
     }
     return current;
   };
 
-  const t = (key: string, params?: Record<string, any>): string => {
+  const t = (key: string, params?: Record<string, string | number>): string => {
     const value = getNestedValue(context.translations, key.split("."));
     if (typeof value === "string") {
       if (params) {

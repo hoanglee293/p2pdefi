@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useLang } from "@/lang";
 
 export default function NotFound() {
-  const { t } = useLang();
   const [mounted, setMounted] = useState(false);
 
   // Only show theme-dependent content after mounting
@@ -24,12 +22,12 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold mb-4">404</h1>
-      <p className="text-xl mb-8">{t("errors.notFound") || "Page not found"}</p>
+      <p className="text-xl mb-8">Page not found</p>
       <Link
         href="/"
         className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
       >
-        {t("errors.goHome") || "Go back home"}
+        Go back home
       </Link>
     </div>
   );

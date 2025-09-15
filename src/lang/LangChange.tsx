@@ -1,6 +1,6 @@
 "use client";
+import Image from "next/image";
 import { useLang, useBrowserLanguage, useBrowserLanguageInfo } from "./useLang";
-import { langConfig } from "./index";
 
 export const LangChange = () => {
   const { lang, setLang, langConfig: config } = useLang();
@@ -20,9 +20,11 @@ export const LangChange = () => {
                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
             }`}
           >
-            <img
+            <Image
               src={langItem.flag}
               alt={langItem.name}
+              width={20}
+              height={12}
               className="w-5 h-3 object-cover rounded"
             />
             <span>{langItem.name}</span>
