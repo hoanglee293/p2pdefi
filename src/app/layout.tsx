@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { LangProvider } from "@/lang/LangProvider";
 
 export default function RootLayout({
   children,
@@ -20,8 +21,10 @@ export default function RootLayout({
           referrerPolicy="no-referrer"
         />
       </head>
-      <body className={`antialiased min-h-screen flex flex-col bg-white dark:bg-black overflow-x-hidden`}>
+      <body className={`antialiased min-h-screen flex flex-col bg-black overflow-x-hidden`}>
+        <LangProvider>
           {children}
+        </LangProvider>
       </body>
     </html>
   );

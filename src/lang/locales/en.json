@@ -8,5 +8,12 @@
     "english": "English", 
     "vietnamese": "Vietnamese",
     "japan": "Japan"
+  },
+  "header": {
+    "wallet": {
+      "connect": "Connect Wallet",
+      "welcome": "Welcome to our platform",
+      "connect_with_us": "Connect with us through multiple flexible login methods"
+    }
   }
 }

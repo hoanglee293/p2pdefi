@@ -8,5 +8,12 @@
     "english": "英語",
     "vietnamese": "ベトナム語",
     "japan": "日本語"
+  },
+  "header": {
+    "wallet": {
+      "connect": "ウォレット接続",
+      "welcome": "ようこそ",
+      "connect_with_us": "始めるには私たちと接続してください"
+    }
   }
 }

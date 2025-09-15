@@ -8,5 +8,12 @@
     "english": "Tiếng Anh",
     "vietnamese": "Tiếng Việt",
     "japan": "Nhật Bản"
+  },
+  "header": {
+    "wallet": {
+      "connect": "Kết nối ví",
+      "welcome": "Chào mừng",
+      "connect_with_us": "Kết nối với chúng tôi để bắt đầu"
+    }
   }
 }
