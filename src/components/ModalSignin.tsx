@@ -51,7 +51,7 @@ const { t } = useLang();
               <div className="self-stretch h-12 relative">
                 <div className="w-12 h-12 left-0 top-0 absolute rounded-full bg-gray-100 dark:bg-gray-800"  />
                 <div className="w-7 h-7 left-[10px] top-[10px] absolute overflow-hidden cursor-pointer" onClick={handleGoogleSignIn}>
-                  <Image
+                  <img
                     src="https://img.icons8.com/color/48/google-logo.png"
                     alt="google"
                     width={28}
@@ -67,7 +67,7 @@ const { t } = useLang();
               <div className="self-stretch h-12 relative">
                 <div className="w-12 h-12 left-0 top-0 absolute rounded-full bg-gray-100 dark:bg-gray-800" />
                 <div className="w-7 h-7 left-[10px] top-[10px] absolute overflow-hidden cursor-pointer" onClick={() => window.open(`${process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL}=${sessionStorage.getItem('ref')}`, "_blank")}>
-                  <Image
+                  <img
                     src="https://img.icons8.com/color/48/telegram-app.png"
                     alt="telegram"
                     width={28}
