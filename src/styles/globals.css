@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -132,17 +134,22 @@ body {
   overflow-x: hidden;
 }
 
+/* Orbitron font utility class */
+.font-orbitron {
+  font-family: 'Orbitron', monospace;
+}
+
 /* custom hard code*/
 .text-gradient {
-  @apply bg-gradient-hover bg-clip-text text-transparent;
+  @apply gradient-hover bg-clip-text text-transparent;
 }
 
 .hover-gradient:hover {
-  @apply bg-gradient-hover bg-clip-text text-transparent;
+  @apply gradient-hover bg-clip-text text-transparent;
 }
 
 .linear-gradient-connect {
-  @apply bg-gradient-overlay from-theme-gradient-overlay-start to-theme-gradient-overlay-end;
+  @apply bg-gradient-overlay;
 }
 
 .container-body {
@@ -154,27 +161,27 @@ body {
 }
 
 .box-gradient {
-  @apply border border-theme-neutral-900 bg-gradient-overlay from-theme-gradient-overlay-start to-theme-gradient-overlay-end backdrop-blur-[5px];
+  @apply border border-gray-200 bg-gradient-overlay backdrop-blur-[5px];
 }
 
 .box-gradient:hover {
-  @apply bg-gradient-overlay from-theme-gradient-overlay-end to-theme-gradient-overlay-start;
+  @apply bg-gradient-overlay;
 }
 
 .check {
-  @apply bg-gradient-hover bg-clip-text text-transparent;
+  @apply gradient-hover bg-clip-text text-transparent;
 }
 
 .dark .border-linear-200 {
-  @apply border border-theme-neutral-900 shadow-custom backdrop-blur-[5px];
+  @apply border border-gray-800 shadow-custom backdrop-blur-[5px];
 }
 
 .dark .bg-neutral-1000 {
-  @apply bg-theme-neutral-1000/80 z-[1];
+  @apply bg-black/80 z-[1];
 }
 
 .box-shadow-info {
-  @apply shadow-custom bg-theme-neutral-1000/80;
+  @apply shadow-custom bg-black/80;
 }
 
 @layer base {
@@ -194,7 +201,7 @@ body {
 
 .hover-gradient::after {
   content: '';
-  @apply absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-hover from-theme-primary-300 to-theme-secondary-300 transition-all duration-300;
+  @apply absolute bottom-0 left-0 w-0 h-[2px] gradient-hover transition-all duration-300;
 }
 
 /* Custom components */

@@ -19,86 +19,21 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Custom Colors
-        'linear': {
-          '200': '#5558FF',
-        },
         // Theme Colors
         'theme': {
-          'primary': {
-            '100': '#15DFFD', // Light blue
-            '300': '#15DFFD', // Light blue
-            '400': '#02B7D2', // Primary blue
-            '500': '#112D60', // Dark blue
-          },
-          'secondary': {
-            '200': '#BA72EA', // Light purple
-            '300': '#761BB3', // Medium purple
-            '400': '#8833EE', // Bright purple
-            '500': '#972BDF', // Dark blue
-          },
-          'blue': {
-            '100': '#00C0FF',
-            '200': '#0071BC',
-            '300': '#E0FCFF',
-          },
-          'neutral': {
-            '100': '#eeeeee',
-            '200': '#D7D7D7',
-            '300': '#C0C0C0',
-            '800': '#4C4C4C',
-            '900': '#353535',
-            '1000': '#1E1E1E',
-            '2000': '#112D60',
-          },
-          'green': {
-            '100': '#bbf7d01a',
-            '200': '#1FC16B',
-            '300': '#C3FFE8',
-            '400': '#F0FFF4',
-          },
-          'red': {
-            '100': '#FB3748',
-            '200': '#D00416',
-            '300': '#fb37481a',
-          },
           'yellow': {
             '100': '#fdfce5',
             '200': '#DFB400',
             '300': '#FFDB43',
           },
-          'brown': {
+          'gray': {
             '100': '#6E6E6E',
+            '200' : "#29313d"
           },
           'black': {
             '100': '#000000',
             '200': '#161616',
-            '300': '#0E0E0ECC',
-            '1/3': '#0E0E0ECC',
-            '1/2': 'rgba(0, 0, 0, 0.50)',
-            '9/10': 'rgba(0, 0, 0, 0.90)',
           },
-          'purple': {
-            '100': '#5558FF',
-            '200': '#720881',
-          },
-          'gradient': {
-            'start': '#15DFFD',
-            'end': '#761BB3',
-            'linear': {
-              'start': '#5558FF',
-              'end': '#00C0FF',
-              'apha': "#83E"
-            },
-            'overlay': {
-              'start': 'rgba(17, 45, 96, 0.50)',
-              'end': 'rgba(136, 51, 238, 0.50)',
-            },
-            'glow': {
-              'blue': 'rgba(99, 249, 254, 0.30)',
-              'purple': 'rgba(151, 43, 223, 0.52)',
-            },
-          }
         },
         // HSL Variables
         border: "hsl(var(--border))",
@@ -106,47 +41,10 @@ const config: Config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      backgroundImage: {
-        'gradient-primary': 'linear-gradient(0deg, var(--tw-gradient-stops))',
-        'gradient-hover': 'linear-gradient(90deg, var(--tw-gradient-stops))',
-        'gradient-overlay': 'linear-gradient(93deg, var(--tw-gradient-stops))',
-      },
-      backgroundColor: {
-        'linear-tm': 'var(--tw-theme-primary-400)',
-        'linear-100': 'var(--tw-theme-neutral-1000)',
-        'linear-200': 'var(--tw-theme-neutral-900)',
       },
       fontFamily: {
         sans: ['Pretendard', 'sans-serif'],
+        orbitron: ['Orbitron', 'monospace'],
       },
       fontWeight: {
         'normal': '400',

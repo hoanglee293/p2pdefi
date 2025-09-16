@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { TelegramWalletService, User, TelegramLoginParams } from '@/services/api/TelegramWalletService';
 import { GoogleService, GoogleLoginParams } from '@/services/api/GoogleService';
+import { authService, User as AuthUser } from '@/services/api/AuthService';
 
 interface AuthState {
   user: User | null;
@@ -155,7 +156,7 @@ export const useAuth = () => {
     setAuthState(prev => ({ ...prev, isLoading: true }));
     
     try {
-      await TelegramWalletService.logout();
+      await authService.logout();
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -169,15 +170,24 @@ export const useAuth = () => {
         isLoading: false,
         error: null
       });
+      
+      // Trigger refetch after successful logout to refresh UI state
+      setTimeout(() => {
+        // Call checkAuthStatus directly since user is now logged out
+        checkAuthStatus();
+      }, 100);
     }
-  }, []);
+  }, [checkAuthStatus]);
 
-  // Get user profile from API
+  // Get user profile from API with auto-refresh token
   const getProfile = useCallback(async () => {
+    setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
+    
     try {
-      const response = await GoogleService.getProfile();
+      const response = await authService.getProfileWithRetry();
       if (response.success && response.data) {
         const user: User = {
+          uid: response.data.user.uid,
           uname: response.data.user.uname,
           uemail: response.data.user.uemail,
           ufulllname: response.data.user.ufulllname,
@@ -188,16 +198,17 @@ export const useAuth = () => {
         };
         
         // Update user data in localStorage
-        localStorage.setItem('user_data', JSON.stringify(user));
+        authService.updateUserData(user);
         
         setAuthState(prev => ({
           ...prev,
           user,
           isAuthenticated: true,
+          isLoading: false,
           error: null
         }));
         
-        return { success: true, user };
+        return { success: true, user, wallet: response.data.mainWallet, importWallets: response.data.importWallets };
       } else {
         throw new Error(response.message || 'Failed to get profile');
       }
@@ -206,6 +217,7 @@ export const useAuth = () => {
                           (error as { message?: string })?.message || 'Failed to get profile';
       setAuthState(prev => ({
         ...prev,
+        isLoading: false,
         error: errorMessage
       }));
       return { success: false, error: errorMessage };
@@ -214,8 +226,12 @@ export const useAuth = () => {
 
   // Refetch user data
   const refetch = useCallback(() => {
-    checkAuthStatus();
-  }, [checkAuthStatus]);
+    if (authService.isAuthenticated()) {
+      getProfile();
+    } else {
+      checkAuthStatus();
+    }
+  }, [checkAuthStatus, getProfile]);
 
   // Clear error
   const clearError = useCallback(() => {
