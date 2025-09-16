@@ -26,9 +26,7 @@ const TelegramLoginContent = () => {
         setIsNewUser(result.isNewUser || false);
         
         // Redirect sau 2 giây
-        setTimeout(() => {
-          router.push('/');
-        }, 2000);
+        router.push('/');
       } else {
         setLoginStatus('error');
       }
