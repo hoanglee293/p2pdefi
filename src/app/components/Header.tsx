@@ -73,6 +73,7 @@ export function Header() {
         // Reset local state after logout
         setWalletInfo(null);
         setIsProfileLoading(false);
+        window.location.reload();
       } catch (error) {
         console.error('Logout failed:', error);
       }

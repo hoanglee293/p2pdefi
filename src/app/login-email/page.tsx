@@ -71,52 +71,110 @@ const EmailLoginContent = () => {
 
   if (isProcessing || loginStatus === 'idle') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardContent className="pt-6">
-            <div className="flex flex-col items-center space-y-4">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-              <p className="text-lg font-medium">Đang xác thực Google...</p>
-              <p className="text-sm text-gray-500">Vui lòng chờ trong giây lát</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="flex flex-col items-center space-y-6">
+          {/* Logo với animation pulse */}
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-blue-200 animate-ping opacity-75"></div>
+            <div className="relative bg-white rounded-full p-4 shadow-lg">
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                className="w-16 h-16 animate-pulse" 
+              />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+          
+          {/* Spinner loading */}
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          </div>
+          
+          {/* Text loading */}
+          <div className="text-center space-y-2">
+            <p className="text-xl font-semibold text-gray-800">Đang xác thực Google...</p>
+            <p className="text-sm text-gray-600">Vui lòng chờ trong giây lát</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (loginStatus === 'success') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="flex justify-center mb-4">
-              <CheckCircle className="h-16 w-16 text-green-600" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="flex flex-col items-center space-y-6 w-full max-w-md">
+          {/* Logo với animation success */}
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-green-200 animate-ping opacity-75"></div>
+            <div className="relative bg-white rounded-full p-4 shadow-lg">
+              <img 
+                src="/logo.png" 
+                alt="Success" 
+                className="w-16 h-16" 
+              />
             </div>
-            <CardTitle className="text-2xl text-green-600">Đăng nhập thành công!</CardTitle>
-            <CardDescription>
+            {/* Checkmark overlay */}
+            <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1">
+              <CheckCircle className="w-6 h-6 text-white" />
+            </div>
+          </div>
+          
+          {/* Success message */}
+          <div className="text-center space-y-2">
+            <p className="text-2xl font-bold text-green-600">Đăng nhập thành công!</p>
+            <p className="text-sm text-gray-600">
               {isNewUser ? 'Chào mừng bạn đến với P2P DeFi!' : 'Chào mừng bạn quay trở lại!'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {user && (
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Tên người dùng:</p>
-                <p className="font-medium">{user.ufulllname}</p>
-                <p className="text-sm text-gray-600">Email:</p>
-                <p className="font-medium">{user.uemail}</p>
-                <p className="text-sm text-gray-600">Username:</p>
-                <p className="font-medium">@{user.uname}</p>
+            </p>
+          </div>
+
+          {/* User info card */}
+          {user && (
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg w-full border border-green-200">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Tên người dùng</p>
+                    <p className="font-semibold text-gray-800">{user.ufulllname}</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Email</p>
+                    <p className="font-semibold text-gray-800">{user.uemail}</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Username</p>
+                    <p className="font-semibold text-gray-800">@{user.uname}</p>
+                  </div>
+                </div>
               </div>
-            )}
-            <p className="text-sm text-gray-500 text-center">
+            </div>
+          )}
+
+          {/* Redirect message */}
+          <div className="text-center space-y-3">
+            <p className="text-sm text-gray-500">
               Bạn sẽ được chuyển hướng về trang chủ trong vài giây...
             </p>
-            <Button onClick={handleGoHome} className="w-full">
+            <Button onClick={handleGoHome} className="w-full bg-green-600 hover:bg-green-700">
               Về trang chủ ngay
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     );
   }
@@ -158,8 +216,25 @@ const EmailLoginContent = () => {
 const EmailLoginPage = () => {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-100">
+        <div className="flex flex-col items-center space-y-6">
+          {/* Logo với animation loading */}
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-yellow-200 animate-ping opacity-75"></div>
+            <div className="relative bg-white rounded-full p-4 shadow-lg">
+              <img 
+                src="/logo.png" 
+                alt="Loading" 
+                className="w-16 h-16 animate-spin" 
+              />
+            </div>
+          </div>
+          
+          {/* Loading text */}
+          <div className="text-center">
+            <p className="text-lg font-medium text-gray-800">Đang tải...</p>
+          </div>
+        </div>
       </div>
     }>
       <EmailLoginContent />

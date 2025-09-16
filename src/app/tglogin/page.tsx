@@ -62,50 +62,66 @@ const TelegramLoginContent = () => {
 
   if (isLoading || loginStatus === 'idle') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardContent className="pt-6">
-            <div className="flex flex-col items-center space-y-4">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-              <p className="text-lg font-medium">Đang xác thực Telegram...</p>
-              <p className="text-sm text-gray-500">Vui lòng chờ trong giây lát</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="flex flex-col items-center space-y-6">
+          {/* Logo với animation pulse */}
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-blue-200 animate-ping opacity-75"></div>
+            <div className="relative bg-white rounded-full p-4 shadow-lg">
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                className="w-16 h-16 animate-pulse" 
+              />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+          
+          {/* Spinner loading */}
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          </div>
+          
+          {/* Text loading */}
+          <div className="text-center space-y-2">
+            <p className="text-xl font-semibold text-gray-800">Đang xác thực Telegram...</p>
+            <p className="text-sm text-gray-600">Vui lòng chờ trong giây lát</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (loginStatus === 'success') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="flex justify-center mb-4">
-              <CheckCircle className="h-16 w-16 text-green-600" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="flex flex-col items-center space-y-6">
+          {/* Logo với animation success */}
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-green-200 animate-ping opacity-75"></div>
+            <div className="relative bg-white rounded-full p-4 shadow-lg">
+              <img 
+                src="/logo.png" 
+                alt="Success" 
+                className="w-16 h-16" 
+              />
             </div>
-            <CardTitle className="text-2xl text-green-600">Đăng nhập thành công!</CardTitle>
-            <CardDescription>
+            {/* Checkmark overlay */}
+            <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1">
+              <CheckCircle className="w-6 h-6 text-white" />
+            </div>
+          </div>
+          
+          {/* Success message */}
+          <div className="text-center space-y-2">
+            <p className="text-2xl font-bold text-green-600">Đăng nhập thành công!</p>
+            <p className="text-sm text-gray-600">
               {isNewUser ? 'Chào mừng bạn đến với P2P DeFi!' : 'Chào mừng bạn quay trở lại!'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {user && (
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Tên người dùng:</p>
-                <p className="font-medium">{user.ufulllname}</p>
-                <p className="text-sm text-gray-600">Username:</p>
-                <p className="font-medium">@{user.uname}</p>
-              </div>
-            )}
-            <p className="text-sm text-gray-500 text-center">
-              Bạn sẽ được chuyển hướng về trang chủ trong vài giây...
             </p>
-            <Button onClick={handleGoHome} className="w-full">
-              Về trang chủ ngay
-            </Button>
-          </CardContent>
-        </Card>
+            <p className="text-xs text-gray-500">Đang chuyển hướng...</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -145,8 +161,25 @@ const TelegramLoginContent = () => {
 const TelegramLoginPage = () => {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-100">
+        <div className="flex flex-col items-center space-y-6">
+          {/* Logo với animation loading */}
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-yellow-200 animate-ping opacity-75"></div>
+            <div className="relative bg-white rounded-full p-4 shadow-lg">
+              <img 
+                src="/logo.png" 
+                alt="Loading" 
+                className="w-16 h-16 animate-spin" 
+              />
+            </div>
+          </div>
+          
+          {/* Loading text */}
+          <div className="text-center">
+            <p className="text-lg font-medium text-gray-800">Đang tải...</p>
+          </div>
+        </div>
       </div>
     }>
       <TelegramLoginContent />
