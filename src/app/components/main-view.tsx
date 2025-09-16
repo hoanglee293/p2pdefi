@@ -13,7 +13,7 @@ export function MainView() {
 
     return (
         <div className="container mx-auto px-6 py-12 h-[calc(100vh-73px)] flex items-center justify-around">
-            <div className="grid lg:grid-cols-2 gap-12 items-start w-full h-[80%]">
+            <div className="grid lg:grid-cols-2 gap-[20%] items-start w-full h-[80%]">
                 {/* Left side - Branding */}
                 <div className="flex flex-col items-center text-center">
                     {/* Large Golden X Logo */}
