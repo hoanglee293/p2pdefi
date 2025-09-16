@@ -44,12 +44,12 @@ export interface RefreshTokenResponse {
 class AuthService {
   private isRefreshing = false;
   private failedQueue: Array<{
-    resolve: (value: any) => void;
-    reject: (error: any) => void;
+    resolve: (value: string | null) => void;
+    reject: (error: Error) => void;
   }> = [];
 
   // Process failed requests queue
-  private processQueue(error: any, token: string | null = null) {
+  private processQueue(error: Error | null, token: string | null = null) {
     this.failedQueue.forEach(({ resolve, reject }) => {
       if (error) {
         reject(error);
@@ -84,7 +84,7 @@ class AuthService {
         throw new Error(data.message || 'Token refresh failed');
       }
     } catch (error) {
-      this.processQueue(error, null);
+      this.processQueue(error instanceof Error ? error : new Error(String(error)), null);
       throw error;
     } finally {
       this.isRefreshing = false;
@@ -96,8 +96,10 @@ class AuthService {
     try {
       const response = await axiosClient.get('/auth/me');
       return response.data;
-    } catch (error: any) {
-      if (error.response?.status === 401) {
+    } catch (error: unknown) {
+      if (error && typeof error === 'object' && 'response' in error && 
+          error.response && typeof error.response === 'object' && 'status' in error.response && 
+          error.response.status === 401) {
         try {
           // Try to refresh token
           await this.refreshToken();
@@ -122,15 +124,17 @@ class AuthService {
 
   // Get user profile with retry mechanism
   async getProfileWithRetry(maxRetries: number = 3): Promise<ProfileResponse> {
-    let lastError: any;
+    let lastError: Error = new Error('Unknown error');
     
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         return await this.getProfile();
-      } catch (error: any) {
-        lastError = error;
+      } catch (error: unknown) {
+        lastError = error instanceof Error ? error : new Error(String(error));
         
-        if (error.response?.status === 401 && attempt < maxRetries) {
+        if (error && typeof error === 'object' && 'response' in error && 
+            error.response && typeof error.response === 'object' && 'status' in error.response && 
+            error.response.status === 401 && attempt < maxRetries) {
           // Wait a bit before retrying
           await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
           continue;

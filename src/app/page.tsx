@@ -7,11 +7,8 @@ import { Header } from './components/Header';
 import { MainView } from './components/main-view';
 
 export default function Home() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
   console.log("isAuthenticated", isAuthenticated)
-  const handleLogout = async () => {
-    await logout();
-  }
   return (
     <Suspense fallback={<div className='h-screen w-screen bg-black'></div>}>
       <Header />

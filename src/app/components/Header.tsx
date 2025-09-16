@@ -2,6 +2,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/ui/button"
 import { Settings, Bell, ChevronDown, User, LogOut, Wallet, Mail, Calendar, UserCircle } from "lucide-react"
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +18,7 @@ interface WalletInfo {
 }
 
 export function Header() {
-    const { logout, user, getProfile, isLoading } = useAuth();
+    const { logout, user, getProfile } = useAuth();
     const [walletInfo, setWalletInfo] = useState<WalletInfo | null>(null);
     const [isProfileLoading, setIsProfileLoading] = useState(false);
 
@@ -83,7 +84,7 @@ export function Header() {
       <div className="flex items-center justify-between">
         {/* Left side - Logo and Navigation */}
         <div className="flex items-center gap-8">
-          <img src="/logo.png" alt="Logo" className="w-10 h-10" />
+          <Image src="/logo.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
           <nav className="flex items-center gap-6">
             <Button variant="ghost" className="text-[#ffffff] hover:text-[#ffa514]">
               Mua bán
@@ -109,9 +110,11 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="text-[#ffffff] flex items-center gap-2">
                 {getUserAvatar() ? (
-                  <img 
+                  <Image 
                     src={getUserAvatar()!} 
                     alt="User Avatar" 
+                    width={20}
+                    height={20}
                     className="w-5 h-5 rounded-full object-cover" 
                   />
                 ) : (
@@ -131,10 +134,12 @@ export function Header() {
               <div className="px-2 py-3">
                 <div className="flex items-center gap-3 mb-3">
                   {getUserAvatar() ? (
-                    <img 
+                    <Image 
                       src={getUserAvatar()!} 
-                      alt="User Avatar" 
-                      className="w-12 h-12 rounded-full object-cover" 
+                      alt="User Avatar"
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 rounded-full object-cover"
                     />
                   ) : (
                     <div className="w-12 h-12 rounded-full bg-[#333333] flex items-center justify-center">

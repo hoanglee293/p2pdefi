@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/ui/button"
 import { Input } from "@/ui/input"
 import { ChevronDown, Info } from "lucide-react"
+import Image from "next/image"
 
 export function MainView() {
     const [activeTab, setActiveTab] = useState<"buy" | "sell">("sell")
@@ -17,7 +18,7 @@ export function MainView() {
                 <div className="flex flex-col items-center text-center">
                     {/* Large Golden X Logo */}
                     <div className="mb-8">
-                        <img src="/logo.png" alt="Logo" className="w-84 h-w-84" />
+                        <Image src="/logo.png" alt="Logo" width={336} height={336} className="w-84 h-w-84" />
                     </div>
 
                     {/* Brand Text */}

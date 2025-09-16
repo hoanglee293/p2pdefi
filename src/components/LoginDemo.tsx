@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from '@/ui/alert';
 import { Loader2, LogOut, User, Mail, MessageCircle } from 'lucide-react';
 import GoogleLoginButton from './GoogleLoginButton';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const LoginDemo: React.FC = () => {
   const { user, isAuthenticated, isLoading, error, logout, getProfile } = useAuth();
@@ -53,9 +54,11 @@ const LoginDemo: React.FC = () => {
             )}
             {user.uavatar && (
               <div className="mt-2">
-                <img 
+                <Image 
                   src={user.uavatar} 
                   alt="Avatar" 
+                  width={64}
+                  height={64}
                   className="w-16 h-16 rounded-full mx-auto"
                 />
               </div>

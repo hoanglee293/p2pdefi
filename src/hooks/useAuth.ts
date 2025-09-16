@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { TelegramWalletService, User, TelegramLoginParams } from '@/services/api/TelegramWalletService';
 import { GoogleService, GoogleLoginParams } from '@/services/api/GoogleService';
-import { authService, User as AuthUser } from '@/services/api/AuthService';
+import { authService } from '@/services/api/AuthService';
 
 interface AuthState {
   user: User | null;

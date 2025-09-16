@@ -6,12 +6,13 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/ui/card';
 import { Alert, AlertDescription } from '@/ui/alert';
-import { Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
+import Image from 'next/image';
 
 const TelegramLoginContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { login, isLoading, error, user } = useAuth();
+  const { login, error, isLoading } = useAuth();
   
   const [loginStatus, setLoginStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isNewUser, setIsNewUser] = useState(false);
@@ -68,9 +69,11 @@ const TelegramLoginContent = () => {
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-blue-200 animate-ping opacity-75"></div>
             <div className="relative bg-white rounded-full p-4 shadow-lg">
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Logo" 
+                width={64}
+                height={64}
                 className="w-16 h-16 animate-pulse" 
               />
             </div>
@@ -101,10 +104,12 @@ const TelegramLoginContent = () => {
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-green-200 animate-ping opacity-75"></div>
             <div className="relative bg-white rounded-full p-4 shadow-lg">
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Success" 
-                className="w-16 h-16" 
+                width={64}
+                height={64}
+                className="w-16 h-16"
               />
             </div>
             {/* Checkmark overlay */}
@@ -167,10 +172,12 @@ const TelegramLoginPage = () => {
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-yellow-200 animate-ping opacity-75"></div>
             <div className="relative bg-white rounded-full p-4 shadow-lg">
-              <img 
+              <Image 
                 src="/logo.png" 
-                alt="Loading" 
-                className="w-16 h-16 animate-spin" 
+                alt="Loading"
+                width={64}
+                height={64}
+                className="w-16 h-16 animate-spin"
               />
             </div>
           </div>
